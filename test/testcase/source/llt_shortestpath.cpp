@@ -84,6 +84,8 @@ TEST_F(CShortestPathTestSuite, DoService)
 	{
 		m_pShortestPath->ShowResult();		
 	}
+
+	EXPECT_EQ(true, m_pShortestPath->DoService());
     
     //йм╥едз╢Ф
     for (int m = 0; m < MAX_X; m++)
