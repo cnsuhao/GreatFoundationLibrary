@@ -33,6 +33,7 @@ CShortestPath::CShortestPath()
     m_maxY = INVALID_COORDINATE;
     
     memset(g_map, 0, sizeof(g_map));
+	bMapInit = false;
 }
 
 //析构函数
@@ -78,14 +79,42 @@ void CShortestPath::InitGrayBlackList()
 }
 
 //设置起点
-void CShortestPath::SetBeginPoint(ST_PT &obj)
+bool CShortestPath::SetBeginPoint(ST_PT &obj)
 {
+	if (!bMapInit)
+	{
+		return false;
+	}
+
+	assert((obj.x >= 0) && (obj.x < MAX_X));
+    assert((obj.y >= 0) && (obj.y < MAX_Y));
+
+	if (g_map[obj.x][obj.y] != 0)
+	{
+		return false;
+	}
+
     g_bPt = obj;
+
+	return true;
 }
 
 //设置终点
-void CShortestPath::SetEndPoint(ST_PT &obj)
+bool CShortestPath::SetEndPoint(ST_PT &obj)
 {
+	if (!bMapInit)
+	{
+		return false;
+	}
+
+	assert((obj.x >= 0) && (obj.x < MAX_X));
+    assert((obj.y >= 0) && (obj.y < MAX_Y));
+
+	if (g_map[obj.x][obj.y] != 0)
+	{
+		return false;
+	}
+
     g_ePt = obj;
 }
 
@@ -105,6 +134,8 @@ bool CShortestPath::SetMap(int x, int y, int **pMap)
             g_map[i][j] = pMap[i][j];
         }
     }
+
+	bMapInit = true;
     
     return true;
 }
@@ -227,7 +258,7 @@ void CShortestPath::ShowResult()
 }
 
 //计算最短路径
-void CShortestPath::DoService()
+bool CShortestPath::DoService()
 {    
     //初始化灰色黑色列表
     InitGrayBlackList();
@@ -237,9 +268,14 @@ void CShortestPath::DoService()
     
     bool bFind = false;   //是否发现目标点
     ST_PT *pDest = NULL;  //目标点
+	static const int TRY_MAX_COUNT = 1000;  //运行尝试最大次数
+	int iTryCnt = 0;   //运行尝试次数
     
-    while (1)
+	//避免查找不到，尝试太多
+    while (iTryCnt <= TRY_MAX_COUNT)
     {
+		iTryCnt++;
+
         //遍历灰色列表
         list<ST_PT *>::iterator pos = g_lstGray.begin();
         for (; pos != g_lstGray.end(); ++pos)
@@ -267,6 +303,13 @@ void CShortestPath::DoService()
         }        
     }
 
+	//未找到路径
+	if (!bFind)
+	{
+		printf("\nNot find that way!\n");
+		return false;
+	}
+
     //目标点在临时集合中，找出目标点
     list<ST_PT *>::iterator pos = g_lstGray.begin();
     for (; pos != g_lstGray.end(); ++pos)
@@ -282,7 +325,7 @@ void CShortestPath::DoService()
     //从目标点向回追溯到起始点，并构造链接
     if (NULL == pDest)
     {
-        return;
+        return false;
     }
     
     ST_PT *pSwap = NULL;
@@ -292,6 +335,8 @@ void CShortestPath::DoService()
         pDest = pDest->prevPt;
         pDest->nextPt = pSwap;
     }    
+
+	return true;
 }
 
 //是否是有效点

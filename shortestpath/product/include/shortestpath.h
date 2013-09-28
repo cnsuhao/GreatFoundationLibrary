@@ -114,10 +114,10 @@ public:
     ~CShortestPath();
 
     //设置起点
-    void SetBeginPoint(ST_PT &obj);
+    bool SetBeginPoint(ST_PT &obj);
 
     //设置终点
-    void SetEndPoint(ST_PT &obj);
+    bool SetEndPoint(ST_PT &obj);
 
     //设置地图
     bool SetMap(int x, int y, int **pMap);
@@ -126,7 +126,7 @@ public:
     void ShowResult();
 
     //计算最短路径
-    void DoService();
+    bool DoService();
 
 private:
     
@@ -152,6 +152,7 @@ private:
     void InitGrayBlackList();
 
 private:
+	bool bMapInit; //图形是否已经初始化过
     int g_map[MAX_X][MAX_Y];  //图形坐标点
     int m_maxX;   //最大x坐标
     int m_maxY;   //最大y坐标

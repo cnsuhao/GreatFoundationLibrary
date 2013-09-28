@@ -51,8 +51,7 @@ protected:
 
 TEST_F(CShortestPathTestSuite, DoService)
 {
-    
-
+	//设置Map
     static const int in_map[3][10] = 
     {
         0,1,0,0,0,0,0,0,0,1,  
@@ -60,14 +59,6 @@ TEST_F(CShortestPathTestSuite, DoService)
         0,0,0,0,1,1,1,1,0,0,    
     };
 
-    ST_PT bPt(0,0);
-    ST_PT ePt(2,3);
-    
-    
-    
-    
-    m_pShortestPath->SetBeginPoint(bPt);
-    m_pShortestPath->SetEndPoint(ePt);        
     int **ppMap = new int*[MAX_X];
     for (int i = 0; i < MAX_X; i++)
     {        
@@ -80,8 +71,19 @@ TEST_F(CShortestPathTestSuite, DoService)
     }
     
     m_pShortestPath->SetMap(MAX_X, MAX_Y, ppMap);
-    m_pShortestPath->DoService();
-    m_pShortestPath->ShowResult();
+
+	//设置起点和终点
+	ST_PT bPt(0,0);
+    ST_PT ePt(2,3);
+    
+    m_pShortestPath->SetBeginPoint(bPt);
+    m_pShortestPath->SetEndPoint(ePt);
+
+	//处理查找算法
+    if (m_pShortestPath->DoService())
+	{
+		m_pShortestPath->ShowResult();		
+	}
     
     //释放内存
     for (int m = 0; m < MAX_X; m++)
