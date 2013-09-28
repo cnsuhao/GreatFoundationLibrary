@@ -250,7 +250,7 @@ void CShortestPath::DoService()
         
             //为了提高检索的效率，这里采用Set标准库函数
             int iBlack = ST2INT(*pPt);
-            g_setBlack.insert(iBlack);
+            (void)g_setBlack.insert(iBlack);
 
             //向三个方向寻找，如果发现目标点直接退出
             if (Search(pPt, E_DIR_EAST)){bFind = true; break;}
@@ -280,6 +280,11 @@ void CShortestPath::DoService()
     }
 
     //从目标点向回追溯到起始点，并构造链接
+    if (NULL == pDest)
+    {
+        return;
+    }
+    
     ST_PT *pSwap = NULL;
     while (NULL != pDest->prevPt)
     {
