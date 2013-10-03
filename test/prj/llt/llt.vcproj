@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions=" @llt.set"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\05.GitHub\GreatFoundationLibrary\test\testcase\include"
+				AdditionalIncludeDirectories=""
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"

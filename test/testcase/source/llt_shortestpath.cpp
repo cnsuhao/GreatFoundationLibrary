@@ -51,6 +51,8 @@ protected:
 
 TEST_F(CShortestPathTestSuite, DoService)
 {
+    
+
     static const int in_map[3][10] = 
     {
         0,1,0,0,0,0,0,0,0,1,  
@@ -59,7 +61,11 @@ TEST_F(CShortestPathTestSuite, DoService)
     };
 
     ST_PT bPt(0,0);
-    ST_PT ePt(2,9);
+    ST_PT ePt(2,3);
+    
+    
+    
+    
     m_pShortestPath->SetBeginPoint(bPt);
     m_pShortestPath->SetEndPoint(ePt);        
     int **ppMap = new int*[MAX_X];
