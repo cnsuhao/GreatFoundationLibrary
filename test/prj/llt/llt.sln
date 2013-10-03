@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "llt", "llt.vcproj", "{DE4D340B-E618-4898-BD78-2B46B4A30043}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shortestpath", "..\..\..\shortestpath\project\shortestpath.vcproj", "{89E2BCC8-ED92-44A1-A1F0-0C6BB00D6031}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE4D340B-E618-4898-BD78-2B46B4A30043}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DE4D340B-E618-4898-BD78-2B46B4A30043}.Debug|Win32.Build.0 = Debug|Win32
+		{DE4D340B-E618-4898-BD78-2B46B4A30043}.Release|Win32.ActiveCfg = Release|Win32
+		{DE4D340B-E618-4898-BD78-2B46B4A30043}.Release|Win32.Build.0 = Release|Win32
+		{89E2BCC8-ED92-44A1-A1F0-0C6BB00D6031}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89E2BCC8-ED92-44A1-A1F0-0C6BB00D6031}.Debug|Win32.Build.0 = Debug|Win32
+		{89E2BCC8-ED92-44A1-A1F0-0C6BB00D6031}.Release|Win32.ActiveCfg = Release|Win32
+		{89E2BCC8-ED92-44A1-A1F0-0C6BB00D6031}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
