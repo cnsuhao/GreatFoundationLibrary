@@ -1,0 +1,18 @@
+//  Microsoft Visual C++ 2008, -si4 -sl4 -sp8, lib-stl.lnt lib-w32.lnt
+//  Standard lint options
+
+
+co-msc90.lnt
+lib-stl.lnt lib-w32.lnt
+options.lnt  -si4 -sl4 -sp8
+-iD:\05.GitHub\GreatFoundationLibrary\shortestpath\product\include
+
+-e1551
+-e1764
+-e818
+-e830
+-e701
+-e1762
+-e702
+-e716
+-e831
