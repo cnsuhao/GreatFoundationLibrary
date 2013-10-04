@@ -39,8 +39,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="@product.set"
 				Optimization="0"
-				AdditionalIncludeDirectories="D:\05.GitHub\WealthFoundationLibrary\shortestpath\product\include"
+				AdditionalIncludeDirectories=""
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
