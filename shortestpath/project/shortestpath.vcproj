@@ -178,6 +178,14 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\..\comm\include\comm_macro.h"
+				>
+			</File>
+			<File
+				RelativePath="..\product\include\mapfile.h"
+				>
+			</File>
+			<File
 				RelativePath="..\product\include\shortestpath.h"
 				>
 			</File>

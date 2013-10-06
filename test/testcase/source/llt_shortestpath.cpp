@@ -74,7 +74,7 @@ TEST_F(CShortestPathTestSuite, DoService)
 
 	//设置起点和终点
 	ST_PT bPt(0,0);
-    ST_PT ePt(2,3);
+    ST_PT ePt(5,3);
     
     m_pShortestPath->SetBeginPoint(bPt);
     m_pShortestPath->SetEndPoint(ePt);
