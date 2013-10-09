@@ -6,6 +6,7 @@ co-msc90.lnt
 lib-stl.lnt lib-w32.lnt
 options.lnt  -si4 -sl4 -sp8
 -iD:\05.GitHub\GreatFoundationLibrary\shortestpath\product\include
+-iD:\05.GitHub\GreatFoundationLibrary\comm\include
 
 -e1551
 -e1764
@@ -16,3 +17,6 @@ options.lnt  -si4 -sl4 -sp8
 -e702
 -e716
 -e831
+
+-sem(CMapfile::InitMap,initializer)
+-sem( CMapfile::CleanMap, cleanup )

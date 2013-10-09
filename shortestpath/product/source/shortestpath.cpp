@@ -29,8 +29,8 @@ using namespace std;
 //¹¹Ôìº¯Êý
 CShortestPath::CShortestPath()
 {
-    m_maxX = INVALID_COORDINATE;
-    m_maxY = INVALID_COORDINATE;
+    m_maxX = INVALID_VALID;
+    m_maxY = INVALID_VALID;
     
     memset(g_map, 0, sizeof(g_map));
 	bMapInit = false;

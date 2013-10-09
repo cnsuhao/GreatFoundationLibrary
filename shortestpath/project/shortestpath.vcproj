@@ -168,6 +168,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\product\source\mapfile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\product\source\shortestpath.cpp"
 				>
 			</File>

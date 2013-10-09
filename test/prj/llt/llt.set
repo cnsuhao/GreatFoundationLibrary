@@ -1,2 +1,3 @@
 /I ..\..\..\shortestpath\product\include\
+/I ..\..\..\comm\include\
 /I ..\..\..\test\testcase\include\

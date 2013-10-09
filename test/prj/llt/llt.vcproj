@@ -169,7 +169,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\testcase\source\llt_mapfile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\testcase\source\llt_shortestpath.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\shortestpath\product\source\mapfile.cpp"
 				>
 			</File>
 			<File

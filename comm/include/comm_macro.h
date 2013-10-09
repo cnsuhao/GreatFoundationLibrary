@@ -20,8 +20,13 @@
 #ifndef __COMM_MACRO_H__
 #define __COMM_MACRO_H__
 
-#define DISALLOW_COPY_ASSIGN(classname) classname(const classname&); \
+#define DISALLOW_COPY_ASSIGN(classname) classname(const classname &); \
     classname& operator=(const classname &)
+
+//MapFile
+#define INVALID_VALID -1
+#define MAX_X 100
+#define MAX_Y 100
 
 #endif //__COMM_MACRO_H__
 

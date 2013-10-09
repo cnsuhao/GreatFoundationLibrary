@@ -20,77 +20,75 @@
 #ifndef __shortestpath_h__
 #define __shortestpath_h__
 
-#define INVALID_COORDINATE -1
-#define MAX_X 100
-#define MAX_Y 100
+#include "comm_macro.h"
 
 //点坐标对象
 typedef struct _ST_PT
-{	
-	int x;
-	int y;
-	_ST_PT *prevPt;  //注意: 不会在本结构体内申请内存，这里只是作为传参
-	_ST_PT *nextPt;
+{    
+    int x;
+    int y;
+    _ST_PT *prevPt;  //注意: 不会在本结构体内申请内存，这里只是作为传参
+    _ST_PT *nextPt;
 
-	_ST_PT()
-	{
-		x = INVALID_COORDINATE;
-		y = INVALID_COORDINATE;
-		prevPt = NULL;
-		nextPt = NULL;
-	}
-	
-	_ST_PT(int i, int j)
-	{
-		x = i;
-		y = j;
-		prevPt = NULL;
-		nextPt = NULL;
-	}
+    _ST_PT()
+    {
+        x = INVALID_VALID;
+        y = INVALID_VALID;
+        prevPt = NULL;
+        nextPt = NULL;
+    }
+    
+    _ST_PT(int i, int j)
+    {
+        x = i;
+        y = j;
+        prevPt = NULL;
+        nextPt = NULL;
+    }
 
 
-	~_ST_PT()
-	{
-		prevPt = NULL;
-		nextPt = NULL;
-	}
+    ~_ST_PT()
+    {
+        prevPt = NULL;
+        nextPt = NULL;
+    }
 
-	_ST_PT(const _ST_PT &obj)
-	{
-		if (this == &obj)
-		{
-			return;
-		}
-		Clone(obj);
-	}
+    _ST_PT(const _ST_PT &obj)
+    {
+        if (this == &obj)
+        {
+            return;
+        }
+        Clone(obj);
+    }
 
-	_ST_PT& operator=(const _ST_PT &obj)
-	{
-		if (this != &obj)
-		{
-			Clone(obj);
-		}
-		return *this;
-	}
+    _ST_PT& operator=(const _ST_PT &obj)
+    {
+        if (this != &obj)
+        {
+            Clone(obj);
+        }
+        return *this;
+    }
 
-	bool operator==(const _ST_PT &obj)
-	{
-		if ((x == obj.x)
-			&& (y == obj.y))
-		{
-			return true;
-		}
-		return false;
-	}
+    bool operator==(const _ST_PT &obj)
+    {
+        if ((x == obj.x)
+            && (y == obj.y))
+        {
+            return true;
+        }
+        return false;
+    }
 
 private:
-	void Clone(const _ST_PT &obj)
-	{
-		x = obj.x;
-		y = obj.y;
-		prevPt = obj.prevPt;
-		nextPt = obj.nextPt;
-	}
+    void Clone(const _ST_PT &obj)
+    {
+        x = obj.x;
+        y = obj.y;
+        prevPt = obj.prevPt;
+        nextPt = obj.nextPt;
+    }
 
 } ST_PT;
 
@@ -99,9 +97,9 @@ typedef set<int> SET_INT;
 //行动方向
 enum E_DIR
 {
-	E_DIR_EAST,
-	E_DIR_SOUTH,
-	E_DIR_NORTH
+    E_DIR_EAST,
+    E_DIR_SOUTH,
+    E_DIR_NORTH
 };
 
 class CShortestPath
@@ -143,7 +141,7 @@ private:
     bool IsDestPt(ST_PT &objP);
     
     //是否是有效点
-    bool IsPointValid(ST_PT &obj);	
+    bool IsPointValid(ST_PT &obj);    
 
     //是否找到目标点
     bool Search(ST_PT *prevPt, E_DIR eDir);
@@ -152,7 +150,7 @@ private:
     void InitGrayBlackList();
 
 private:
-	bool bMapInit; //图形是否已经初始化过
+    bool bMapInit; //图形是否已经初始化过
     int g_map[MAX_X][MAX_Y];  //图形坐标点
     int m_maxX;   //最大x坐标
     int m_maxY;   //最大y坐标
@@ -165,3 +163,4 @@ private:
 };
 
 #endif //__shortestpath_h__
+
