@@ -28,6 +28,8 @@
 using namespace std;
 
 #include "shortestpath.h"
+#include "comm_macro.h"
+#include "mapfile.h"
 
 class CShortestPathTestSuite : public testing::Test
 {
@@ -51,30 +53,29 @@ protected:
 
 TEST_F(CShortestPathTestSuite, DoService)
 {
+    CMapfile *m_pMapfile = new CMapfile();
 	//设置Map
-    static const int in_map[3][10] = 
-    {
-        0,1,0,0,0,0,0,0,0,1,  
-        0,1,0,1,0,1,1,1,0,1,
-        0,0,0,0,1,1,1,1,0,0,    
-    };
+    char FileName[] = "D:\\05.GitHub\\GreatFoundationLibrary\\shortestpath\\project\\Resource\\map_test.txt";
+    m_pMapfile->SetFileName(FileName);
 
-    int **ppMap = new int*[MAX_X];
-    for (int i = 0; i < MAX_X; i++)
-    {        
-        int *pMap = new int[MAX_Y];        
-        for (int j = 0; j < MAX_Y; j++)
-        {
-            pMap[j] = in_map[i][j];            
-        }
-        ppMap[i] = pMap;
-    }
-    
-    m_pShortestPath->SetMap(MAX_X, MAX_Y, ppMap);
+    char CanWalk[] = "-";
+    m_pMapfile->SetCanWalkToken(CanWalk);
+
+    char CannotWalk[] = "~";
+    m_pMapfile->SetCannotWalkToken(CannotWalk);
+
+    char DelimeterToken[] = " \r\n";
+    m_pMapfile->SetDelimeterToken(DelimeterToken);
+
+    int x = 0;
+    int y = 0;
+    int **ppMap = m_pMapfile->GetMap(x, y);
+
+    m_pShortestPath->SetMap(x, y, ppMap);
 
 	//设置起点和终点
 	ST_PT bPt(0,0);
-    ST_PT ePt(2,3);
+    ST_PT ePt(2,7);
     
     m_pShortestPath->SetBeginPoint(bPt);
     m_pShortestPath->SetEndPoint(ePt);
@@ -88,11 +89,8 @@ TEST_F(CShortestPathTestSuite, DoService)
 	EXPECT_EQ(true, m_pShortestPath->DoService());
     
     //释放内存
-    for (int m = 0; m < MAX_X; m++)
-    {
-        delete[] ppMap[m];
-    }
-    delete[] ppMap;
+    delete m_pMapfile;
+    m_pMapfile = NULL;
 
     EXPECT_EQ(6, 6);
 
