@@ -1,6 +1,6 @@
 /******************************************************************************
 
-                  版权所有 (C), 2010-2020, 脑袋空空技术有限公司
+                  版权所有 (C), 2010-2020, 中国开源基础类库
 
  ******************************************************************************
   文 件 名   : llt_mapfile.cpp
@@ -43,7 +43,7 @@ protected:
 
 TEST_F(CMapFileTestSuite, DoService)
 {
-    char FileName[] = "D:\\05.GitHub\\GreatFoundationLibrary\\shortestpath\\project\\Resource\\map_test.txt";
+    char FileName[] = "..\\..\\..\\shortestpath\\project\\Resource\\map_test.txt";
     m_pMapfile->SetFileName(FileName);
 
     char CanWalk[] = "-";
