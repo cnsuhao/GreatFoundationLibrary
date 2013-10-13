@@ -18,5 +18,5 @@ options.lnt  -si4 -sl4 -sp8
 -e716
 -e831
 
--sem(CMapfile::InitMap,initializer)
--sem( CMapfile::CleanMap, cleanup )
+-sem(CMapfile::CreateMap,initializer)
+-sem( CMapfile::DestoryMap, cleanup )

@@ -26,13 +26,13 @@
 //构造函数
 CMapfile::CMapfile()
 {    
-    InitMap();
+    CreateMap();
 }
 
 //析构函数
 CMapfile::~CMapfile()
 {
-    CleanMap();
+    DestoryMap();
 }
 
 //获取地图数据        
@@ -49,9 +49,14 @@ int** CMapfile::GetMap(int &x, int &y)
         printf( "The file '%s' was opened\n", m_FileName);
     }
 
+    //初始化赋值
+    InitMap();
+
     char line[MAX_LINE_CHAR] = {0};
-    int lineNo = 0;
+    int lineNo = 0;  //行序号
+    int colNo = 0;   //列序号
     int m = 0;
+
     while( !feof( pHandle ) )
     {
         memset(line, 0, sizeof(line));
@@ -64,12 +69,12 @@ int** CMapfile::GetMap(int &x, int &y)
 
         //解析每一行放入Map数据中
         m = 0;
-        for (int i = 0; (i < MAX_LINE_CHAR) && (m < MAX_Y); i++)
+        for (int i = 0; (i < strlen(line)) && (m < MAX_Y); i++)
         {
             //输入字符非法，直接返回NULL，表明地图不合法            
             if (!IsValidOfMapChar(line[i]))
             {
-                printf("There are some special char [%c] which can not identify.",
+                printf("There are some special char [%c] which can not identify.\n",
                     line[i]);
                 fclose(pHandle);
                 return NULL;
@@ -84,6 +89,12 @@ int** CMapfile::GetMap(int &x, int &y)
             E_WALK eWalk = Char2Int(line[i]);
             m_ppMap[lineNo][m] = static_cast<int>(eWalk);
             m++;
+
+            //取最大的列序号
+            if (m > colNo)
+            {
+                colNo = m;
+            }
         }
 
         //累计行号，如果超过最大值，表明地图不合法
@@ -97,7 +108,7 @@ int** CMapfile::GetMap(int &x, int &y)
     }
 
     x = lineNo;
-    y = m;
+    y = colNo;
     
     fclose(pHandle);
     
@@ -107,29 +118,33 @@ int** CMapfile::GetMap(int &x, int &y)
 //设置文件名
 void CMapfile::SetFileName(char filename[])
 {
+    memset(m_FileName, 0, sizeof(m_FileName));
     memcpy(m_FileName, filename, sizeof(m_FileName));
 }
 
 //设置可行走的标识符
 void CMapfile::SetCanWalkToken(char token[])
 {
+    memset(m_CanWalk, 0, sizeof(m_CanWalk));
     memcpy(m_CanWalk, token, sizeof(m_CanWalk));
 }
 
 //设置无法行走的标识符
 void CMapfile::SetCannotWalkToken(char token[])
 {
+    memset(m_CannotWalk, 0, sizeof(m_CannotWalk));
     memcpy(m_CannotWalk, token, sizeof(m_CannotWalk));
 }
 
 //设置字符集间隔符
 void CMapfile::SetDelimeterToken(char token[])
 {
+    memset(m_DelimeterToken, 0, sizeof(m_DelimeterToken));
     memcpy(m_DelimeterToken, token, sizeof(m_DelimeterToken));
 }
 
 //创建Map数据
-void CMapfile::InitMap()
+void CMapfile::CreateMap()
 {
     memset(m_FileName, 0, sizeof(m_FileName));
     memset(m_CanWalk, 0, sizeof(m_CanWalk));
@@ -147,7 +162,7 @@ void CMapfile::InitMap()
 }
 
 //释放Map数据
-void CMapfile::CleanMap()
+void CMapfile::DestoryMap()
 {
     if (NULL == m_ppMap)  
     {
@@ -165,6 +180,28 @@ void CMapfile::CleanMap()
 
     delete[] m_ppMap;
     m_ppMap = NULL;    
+}
+
+//初始化Map数据
+void CMapfile::InitMap()
+{
+    if (NULL == m_ppMap)  
+    {
+        return;
+    }
+    
+    for (int i = 0; i < MAX_X; i++)
+    {   
+        if (NULL == m_ppMap[i])
+        {
+            return;
+        }
+        
+        for (int j = 0; j < MAX_Y; j++)
+        {            
+            m_ppMap[i][j] = 1;
+        }
+    }
 }
 
 //地图上字符转化为数字 0:通路 1:障碍 -1:非法值
@@ -198,6 +235,16 @@ bool CMapfile::IsValidOfMapChar(char ch)
     //如果该字符不属于任何一个集合，则不合法
     if ((NULL == pdestCan) && (NULL == pdestCannot) && (NULL == pdestToken))
     {
+        return false;
+    }
+
+    //如果有任意两个字符属于同一个集合，则不合法
+    if (((NULL != pdestCan) && (NULL != pdestCannot))
+        || ((NULL != pdestCan) && (NULL != pdestToken))
+        || ((NULL != pdestCannot) && (NULL != pdestToken))
+        )
+    {
+        printf("repeat char [%c] \n", ch);
         return false;
     }
     return true;

@@ -58,10 +58,13 @@ private:
     DISALLOW_COPY_ASSIGN(CMapfile);
 
     //创建Map数据
-    void InitMap();
+    void CreateMap();
 
     //释放Map数据
-    void CleanMap();
+    void DestoryMap();
+
+    //初始化Map数据
+    void InitMap();
 
     //地图上字符转化为数字 0:通路 1:障碍 -1:非法值
     E_WALK Char2Int(char ch);

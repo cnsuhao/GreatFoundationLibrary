@@ -25,8 +25,16 @@
 
 //MapFile
 #define INVALID_VALID -1
-#define MAX_X 100
-#define MAX_Y 100
+#define MAX_X 15
+#define MAX_Y 8
+
+//基本数据类型定义
+typedef unsigned char BYTE;
+typedef unsigned short WORD;
+typedef unsigned int DWORD;
+
+//计算数组大小
+#define COUNTOF(arr) sizeof(arr)/sizeof(arr[0])
 
 #endif //__COMM_MACRO_H__
 
