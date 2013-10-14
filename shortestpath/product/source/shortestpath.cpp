@@ -203,10 +203,15 @@ bool CShortestPath::Search(ST_PT *prevPt, E_DIR eDir)
         tmpPt->x = prevPt->x + 1;
         tmpPt->y = prevPt->y;
     }
-    else
+    else if (E_DIR_NORTH == eDir)
     {
         tmpPt->x = prevPt->x - 1;
         tmpPt->y = prevPt->y;
+    }
+    else
+    {
+        tmpPt->x = prevPt->x;
+        tmpPt->y = prevPt->y - 1;
     }
 
     if (!IsPointValid(*tmpPt))
@@ -290,6 +295,7 @@ bool CShortestPath::DoService()
 
             //向三个方向寻找，如果发现目标点直接退出
             if (Search(pPt, E_DIR_EAST)){bFind = true; break;}
+            if (Search(pPt, E_DIR_WEST)){bFind = true; break;}
             if (Search(pPt, E_DIR_SOUTH)) {bFind = true; break;}
             if (Search(pPt, E_DIR_NORTH)) {bFind = true; break;}
         }

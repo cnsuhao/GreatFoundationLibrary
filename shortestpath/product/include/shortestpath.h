@@ -98,6 +98,7 @@ typedef set<int> SET_INT;
 enum E_DIR
 {
     E_DIR_EAST,
+    E_DIR_WEST,
     E_DIR_SOUTH,
     E_DIR_NORTH
 };

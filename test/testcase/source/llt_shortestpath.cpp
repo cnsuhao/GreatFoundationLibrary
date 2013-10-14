@@ -53,9 +53,11 @@ protected:
 
 TEST_F(CShortestPathTestSuite, DoService)
 {
+    #if 1
     CMapfile *m_pMapfile = new CMapfile();
+    
 	//设置Map
-    char FileName[] = "D:\\05.GitHub\\GreatFoundationLibrary\\shortestpath\\project\\Resource\\map_test.txt";
+    char FileName[] = "..\\..\\..\\shortestpath\\project\\Resource\\map_normal.txt";
     m_pMapfile->SetFileName(FileName);
 
     char CanWalk[] = "-";
@@ -72,26 +74,45 @@ TEST_F(CShortestPathTestSuite, DoService)
     int **ppMap = m_pMapfile->GetMap(x, y);
 
     m_pShortestPath->SetMap(x, y, ppMap);
-
-	//设置起点和终点
-	ST_PT bPt(0,0);
-    ST_PT ePt(2,7);
+    #endif
     
-    m_pShortestPath->SetBeginPoint(bPt);
-    m_pShortestPath->SetEndPoint(ePt);
-
-	//处理查找算法
-    if (m_pShortestPath->DoService())
-	{
-		m_pShortestPath->ShowResult();		
-	}
-
-	EXPECT_EQ(true, m_pShortestPath->DoService());
+    typedef struct _ST_TESTCONDITION
+    {
+        bool bResult;   //执行结果
+        BYTE bX;    //起点X坐标
+        BYTE bY;    //起点Y坐标
+        BYTE eX;    //终点X坐标
+        BYTE eY;    //终点Y坐标
+    } ST_TESTCONDITION;
     
+    static const ST_TESTCONDITION s_TestCond[] = 
+    {
+        {true, 0, 0, 2, 7},
+        {true, 2, 7, 0, 0},
+    };
+    
+    for (int i = 0; i < COUNTOF(s_TestCond); i++)
+    {
+        //设置起点和终点
+	    ST_PT bPt(s_TestCond[i].bX, s_TestCond[i].bY);
+        ST_PT ePt(s_TestCond[i].eX, s_TestCond[i].eY);
+        
+        m_pShortestPath->SetBeginPoint(bPt);
+        m_pShortestPath->SetEndPoint(ePt);
+
+	    //处理查找算法
+        if (m_pShortestPath->DoService())
+	    {
+		    m_pShortestPath->ShowResult();		
+	    }
+
+	    EXPECT_EQ(s_TestCond[i].bResult, m_pShortestPath->DoService());
+    }	
+    
+    #if 1
     //释放内存
     delete m_pMapfile;
     m_pMapfile = NULL;
-
-    EXPECT_EQ(6, 6);
+    #endif
 
 }
