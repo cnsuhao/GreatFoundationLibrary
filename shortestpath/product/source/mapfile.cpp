@@ -69,7 +69,7 @@ int** CMapfile::GetMap(int &x, int &y)
 
         //解析每一行放入Map数据中
         m = 0;
-        for (int i = 0; (i < strlen(line)) && (m < MAX_Y); i++)
+        for (WORD i = 0; (i < strlen(line)) && (m < MAX_Y); i++)
         {
             //输入字符非法，直接返回NULL，表明地图不合法            
             if (!IsValidOfMapChar(line[i]))

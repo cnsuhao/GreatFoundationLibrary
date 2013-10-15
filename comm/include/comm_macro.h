@@ -36,5 +36,12 @@ typedef unsigned int DWORD;
 //计算数组大小
 #define COUNTOF(arr) sizeof(arr)/sizeof(arr[0])
 
+//参数校验
+#define EXECUTE_CMD(CMD, RET) \
+    if (CMD) \
+    { \
+        return RET; \
+    }
+
 #endif //__COMM_MACRO_H__
 

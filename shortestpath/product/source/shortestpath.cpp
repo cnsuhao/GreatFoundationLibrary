@@ -33,7 +33,7 @@ CShortestPath::CShortestPath()
     m_maxY = INVALID_VALID;
     
     memset(g_map, 0, sizeof(g_map));
-	bMapInit = false;
+    bMapInit = false;
 }
 
 //析构函数
@@ -81,48 +81,50 @@ void CShortestPath::InitGrayBlackList()
 //设置起点
 bool CShortestPath::SetBeginPoint(ST_PT &obj)
 {
-	if (!bMapInit)
-	{
-		return false;
-	}
+    if (!bMapInit)
+    {
+        return false;
+    }
 
-	assert((obj.x >= 0) && (obj.x < MAX_X));
-    assert((obj.y >= 0) && (obj.y < MAX_Y));
+    EXECUTE_CMD(((obj.x < 0) || (obj.x > MAX_X)), false)
+    EXECUTE_CMD(((obj.y < 0) || (obj.y > MAX_Y)), false)
 
-	if (g_map[obj.x][obj.y] != 0)
-	{
-		return false;
-	}
+    if (g_map[obj.x][obj.y] != 0)
+    {
+        return false;
+    }
 
     g_bPt = obj;
 
-	return true;
+    return true;
 }
 
 //设置终点
 bool CShortestPath::SetEndPoint(ST_PT &obj)
 {
-	if (!bMapInit)
-	{
-		return false;
-	}
+    if (!bMapInit)
+    {
+        return false;
+    }
 
-	assert((obj.x >= 0) && (obj.x < MAX_X));
-    assert((obj.y >= 0) && (obj.y < MAX_Y));
+    EXECUTE_CMD(((obj.x < 0) || (obj.x > MAX_X)), false)
+    EXECUTE_CMD(((obj.y < 0) || (obj.y > MAX_Y)), false)
 
-	if (g_map[obj.x][obj.y] != 0)
-	{
-		return false;
-	}
+    if (g_map[obj.x][obj.y] != 0)
+    {
+        return false;
+    }
 
     g_ePt = obj;
+
+    return true;
 }
 
 //设置地图
 bool CShortestPath::SetMap(int x, int y, int **pMap)
 {
-    assert((x > 0) && (x <= MAX_X));
-    assert((y > 0) && (y <= MAX_Y));
+    EXECUTE_CMD(((x < 0) || (x > MAX_X)), false)
+    EXECUTE_CMD(((y < 0) || (y > MAX_Y)), false)
     
     m_maxX = x;
     m_maxY = y;
@@ -135,7 +137,7 @@ bool CShortestPath::SetMap(int x, int y, int **pMap)
         }
     }
 
-	bMapInit = true;
+    bMapInit = true;
     
     return true;
 }
@@ -188,6 +190,7 @@ bool CShortestPath::IsDestPt(ST_PT &objP)
     return false;
 }
 
+//lint -e438 -e429
 //是否找到目标点
 bool CShortestPath::Search(ST_PT *prevPt, E_DIR eDir)
 {
@@ -245,6 +248,7 @@ bool CShortestPath::Search(ST_PT *prevPt, E_DIR eDir)
 
     return false;
 }
+//lint +e438 +e429
 
 //打印结果
 void CShortestPath::ShowResult()
@@ -273,13 +277,13 @@ bool CShortestPath::DoService()
     
     bool bFind = false;   //是否发现目标点
     ST_PT *pDest = NULL;  //目标点
-	static const int TRY_MAX_COUNT = 1000;  //运行尝试最大次数
-	int iTryCnt = 0;   //运行尝试次数
+    static const int TRY_MAX_COUNT = 1000;  //运行尝试最大次数
+    int iTryCnt = 0;   //运行尝试次数
     
-	//避免查找不到，尝试太多
+    //避免查找不到，尝试太多
     while (iTryCnt <= TRY_MAX_COUNT)
     {
-		iTryCnt++;
+        iTryCnt++;
 
         //遍历灰色列表
         list<ST_PT *>::iterator pos = g_lstGray.begin();
@@ -309,12 +313,12 @@ bool CShortestPath::DoService()
         }        
     }
 
-	//未找到路径
-	if (!bFind)
-	{
-		printf("\nNot find that way!\n");
-		return false;
-	}
+    //未找到路径
+    if (!bFind)
+    {
+        printf("\nNot find that way!\n");
+        return false;
+    }
 
     //目标点在临时集合中，找出目标点
     list<ST_PT *>::iterator pos = g_lstGray.begin();
@@ -342,7 +346,7 @@ bool CShortestPath::DoService()
         pDest->nextPt = pSwap;
     }    
 
-	return true;
+    return true;
 }
 
 //是否是有效点

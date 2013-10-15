@@ -52,33 +52,13 @@ protected:
 };
 
 TEST_F(CShortestPathTestSuite, DoService)
-{
-    #if 1
-    CMapfile *m_pMapfile = new CMapfile();
-    
-	//设置Map
-    char FileName[] = "..\\..\\..\\shortestpath\\project\\Resource\\map_normal.txt";
-    m_pMapfile->SetFileName(FileName);
-
-    char CanWalk[] = "-";
-    m_pMapfile->SetCanWalkToken(CanWalk);
-
-    char CannotWalk[] = "~";
-    m_pMapfile->SetCannotWalkToken(CannotWalk);
-
-    char DelimeterToken[] = " \r\n";
-    m_pMapfile->SetDelimeterToken(DelimeterToken);
-
-    int x = 0;
-    int y = 0;
-    int **ppMap = m_pMapfile->GetMap(x, y);
-
-    m_pShortestPath->SetMap(x, y, ppMap);
-    #endif
+{       
+    string strFilePath = "..\\..\\..\\shortestpath\\project\\Resource\\"; //地图文件路径
     
     typedef struct _ST_TESTCONDITION
     {
-        bool bResult;   //执行结果
+        bool bResult;   //执行结果      
+        string filename; //地图文件名  
         BYTE bX;    //起点X坐标
         BYTE bY;    //起点Y坐标
         BYTE eX;    //终点X坐标
@@ -87,32 +67,69 @@ TEST_F(CShortestPathTestSuite, DoService)
     
     static const ST_TESTCONDITION s_TestCond[] = 
     {
-        {true, 0, 0, 2, 7},
-        {true, 2, 7, 0, 0},
+        //连通地图
+        {true, "map_s_walk.txt", 0, 0, 2, 7},
+        {true, "map_s_walk.txt", 2, 7, 0, 0},
+        {true, "map_s_walk.txt", 3, 7, 0, 0},        
+        {false, "map_s_walk.txt", 0, 0, 0, 0},        
+        {false, "map_s_walk.txt", 0, 2, 0, 0},        
+        {true, "map_s_walk.txt", 0, 3, 0, 0},        
+        {false,"map_s_walk.txt",  0, 10, 0, 0},
+        {false,"map_s_walk.txt",  0, 0, 0, 100},        
+        {false,"map_s_walk.txt",  100, 0, 0, 0},
+        {false, "map_s_walk.txt", 0, 0, 100, 0},
+        {false,"map_s_walk.txt",  0, 0, 6, 3},        
+        {false,"map_s_walk.txt",  0, 0, 4, 3},
+        {true,"map_s_walk.txt",  0, 0, 4, 4},
+        
+        //地图不连通
+        {false,"map_s_not_walk.txt",  0, 0, 3, 6},  
+        {false,"map_s_not_walk.txt",  0, 0, 3, 5},  
+        {true,"map_s_not_walk.txt",  0, 0, 3, 4},      
     };
     
     for (int i = 0; i < COUNTOF(s_TestCond); i++)
     {
+        CMapfile Mapfile;       
+        string strTmp = strFilePath + s_TestCond[i].filename;
+        char FileName[MAX_PATH_LEN] = {0};
+        memcpy(FileName, strTmp.c_str(), MAX_PATH_LEN);
+        Mapfile.SetFileName(FileName);
+        Mapfile.SetCanWalkToken("-");
+        Mapfile.SetCannotWalkToken("~");
+        Mapfile.SetDelimeterToken(" \r\n");    
+        int x = 0;
+        int y = 0;
+        int **ppMap = Mapfile.GetMap(x, y);    
+        m_pShortestPath->SetMap(x, y, ppMap);
+    
+        bool bRet = false;
+        
         //设置起点和终点
 	    ST_PT bPt(s_TestCond[i].bX, s_TestCond[i].bY);
         ST_PT ePt(s_TestCond[i].eX, s_TestCond[i].eY);
         
-        m_pShortestPath->SetBeginPoint(bPt);
-        m_pShortestPath->SetEndPoint(ePt);
+        bRet = m_pShortestPath->SetBeginPoint(bPt);        
+        if (!bRet)
+        {
+            EXPECT_EQ(s_TestCond[i].bResult, bRet);
+            continue;
+        }
+        
+        bRet = m_pShortestPath->SetEndPoint(ePt);        
+        if (!bRet)
+        {
+            EXPECT_EQ(s_TestCond[i].bResult, bRet);
+            continue;
+        }
 
 	    //处理查找算法
-        if (m_pShortestPath->DoService())
+	    bRet = m_pShortestPath->DoService();
+	    EXPECT_EQ(s_TestCond[i].bResult, bRet);
+        if (bRet)
 	    {
 		    m_pShortestPath->ShowResult();		
-	    }
-
-	    EXPECT_EQ(s_TestCond[i].bResult, m_pShortestPath->DoService());
+	    }	    
     }	
     
-    #if 1
-    //释放内存
-    delete m_pMapfile;
-    m_pMapfile = NULL;
-    #endif
-
 }
