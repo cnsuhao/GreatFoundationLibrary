@@ -175,6 +175,10 @@
 				RelativePath="..\product\source\shortestpath.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\product\source\sortstrategy.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -191,6 +195,10 @@
 			</File>
 			<File
 				RelativePath="..\product\include\shortestpath.h"
+				>
+			</File>
+			<File
+				RelativePath="..\product\include\sortstrategy.h"
 				>
 			</File>
 		</Filter>

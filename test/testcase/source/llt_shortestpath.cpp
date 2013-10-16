@@ -52,7 +52,7 @@ protected:
 };
 
 TEST_F(CShortestPathTestSuite, DoService)
-{       
+{   
     string strFilePath = "..\\..\\..\\shortestpath\\project\\Resource\\"; //地图文件路径
     
     typedef struct _ST_TESTCONDITION
@@ -130,6 +130,5 @@ TEST_F(CShortestPathTestSuite, DoService)
 	    {
 		    m_pShortestPath->ShowResult();		
 	    }	    
-    }	
-    
+    }
 }

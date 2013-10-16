@@ -177,11 +177,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\testcase\source\llt_sortstrategy.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\shortestpath\product\source\mapfile.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\shortestpath\product\source\shortestpath.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\shortestpath\product\source\sortstrategy.cpp"
 				>
 			</File>
 		</Filter>
