@@ -54,7 +54,7 @@ void CSortStrategyInsert::Sort(int *Array, int len)
             {
                 for (int k = i; k > j; k--) //比较后要往后移
                 {
-                Swap(Array[k], Array[k-1]);
+                    Swap(Array[k], Array[k-1]);
                 }
             }
         }
@@ -105,7 +105,7 @@ void CSortStrategyQuick::Sort(int *Array, int iBegin, int iEnd)
             break;
         }
     }
-
+    
     Swap(Array[iBegin], Array[j]);
     Sort(Array, 0, j-1);
     Sort(Array, j+1, iEnd);
