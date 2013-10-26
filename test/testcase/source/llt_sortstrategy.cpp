@@ -36,7 +36,7 @@ protected:
     }    
 };
 
-#define TWO_DIMEN_LEN 200
+#define TWO_DIMEN_LEN 3000
 
 #define BEFORE_ARRAYSORT \
     {10,1,6,2,4,9,12,3}, \
@@ -83,7 +83,6 @@ TEST_F(CSortSSuite, TNAME) \
         m_sort.Sort(iArray##ARNO[k], COUNTOF(iArray##ARNO[k])); \
         for (int i = 0; i < COUNTOF(iArray##ARNO[k]); i++) \
         { \
-            printf("%d ", iArray##ARNO[k][i]); \
             EXPECT_EQ(iArray##ARNO[k][i], iExpArray[k][i]); \
         } \
         printf("\n"); \

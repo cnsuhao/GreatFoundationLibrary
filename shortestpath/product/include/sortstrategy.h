@@ -56,7 +56,7 @@ class CSortStrategyQuick : public ISortStrategy
 public:
     void Sort(int *Array, int len);
 private:
-    void Sort(int *Array, int iBegin, int iEnd);    
+    void Sort(int *Array, int low, int high);
 };
 
 

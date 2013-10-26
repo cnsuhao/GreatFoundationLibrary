@@ -80,33 +80,35 @@ void CSortStrategySelect::Sort(int *Array, int len)
 //10 8 5 12 7
 void CSortStrategyQuick::Sort(int *Array, int len)
 {
-     Sort(Array, 0, len-1);
+     Sort(Array, 0, len-1);     
 }
 
-void CSortStrategyQuick::Sort(int *Array, int iBegin, int iEnd)
+void CSortStrategyQuick::Sort(int *Array, int low, int high)
 {
-    if (iBegin >= iEnd)
+    if (0 == Array) return;
+    if (low < 0) return;
+    if (high < 0) return;
+    
+    if (low >= high)
     {
         return;
     }
-    int k = Array[iBegin];
-    int i = iBegin;
-    int j = iEnd + 1;
-    while (true)
-    {
-        while ((i < iEnd) && (Array[++i] > k));
-        while ((j > iBegin) && (Array[--j] < k));
-        if (i < j)
-        {
-            Swap(Array[i], Array[j]);
-        }
-        else
-        {
-            break;
-        }
-    }
     
-    Swap(Array[iBegin], Array[j]);
-    Sort(Array, 0, j-1);
-    Sort(Array, j+1, iEnd);
+    int Begin = low;
+    int End = high;
+    
+    int pivot = Array[low];
+    while (low < high)
+    {
+        while ((low < high) && (Array[high] <= pivot)) --high;    
+        Array[low] =  Array[high];
+        
+        while ((low < high) && (Array[low] >= pivot)) ++low;
+        Array[high] =  Array[low];
+    }
+    Array[low] = pivot;
+    
+    Sort(Array, Begin, low-1);
+    Sort(Array, low+1, End);
+    
 }
